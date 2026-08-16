@@ -25,8 +25,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Creates the key file at the root of your repo
-      # After deploy, it will be at: https://vanta-forge.github.io/Vanta-Forge/YOUR-KEY.txt
       - name: Create IndexNow key file
         run: echo "${{ secrets.INDEXNOW_KEY }}" > ./${{ secrets.INDEXNOW_KEY }}.txt
 
@@ -42,7 +40,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-      # Submits your 2 pages to Bing IndexNow
       - name: Submit URLs to IndexNow
         run: |
           curl -X POST "https://api.indexnow.org/IndexNow" \
