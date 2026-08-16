@@ -14,6 +14,16 @@
       "number": 3,
       "question": "What is your email for communication?",
       "placeholder": "e.g., xyz@gmail.com"
+    },
+    {
+      "number": 4,
+      "question": "Your genre",
+      "placeholder": "technology, arts"
+    },
+    {
+      "number": 5,
+      "question": "Describe your new store's looks",
+      "placeholder": "clean and fast ... Etc etc"
     }
   ]
 }
