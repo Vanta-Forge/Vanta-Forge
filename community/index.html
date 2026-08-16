@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+    NO CACHE — force fresh load every time
+    ============================================================ -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- ============================================================
+    PREMIUM FONT — Playfair Display (elegant serif)
+    ============================================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap"
+    rel="stylesheet"
+    />
+
+    <title>Coming Soon</title>
+
+    <style>
+        /* --- reset & base --- */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #ffffff;
+            /* pure white */
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* --- main content --- */
+        .coming-soon {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* --- premium wordmark --- */
+        .wordmark {
+            font-size: clamp(3.2rem, 14vw, 7.5rem);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #1a1a1a;
+            line-height: 1.1;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        /* --- italic flourish --- */
+        .wordmark .ampersand {
+            font-style: italic;
+            font-weight: 400;
+            color: #2c2c2c;
+            letter-spacing: 0.02em;
+        }
+
+        /* --- subtle divider --- */
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+            margin: 1.8rem auto 2rem;
+            border-radius: 4px;
+            opacity: 0.7;
+        }
+
+        /* --- sub-message --- */
+        .sub-message {
+            font-size: clamp(1rem, 2.2vw, 1.4rem);
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #6b6b6b;
+            margin-top: 0.5rem;
+            font-style: italic;
+            opacity: 0.85;
+        }
+
+        /* --- tiny decorative line --- */
+        .ornament {
+            font-size: 1.6rem;
+            color: #c9a96e;
+            letter-spacing: 0.6rem;
+            margin-top: 2.2rem;
+            opacity: 0.5;
+            font-weight: 300;
+        }
+
+        /* --- responsive fine-tune --- */
+        @media (max-width: 480px) {
+            .divider {
+                width: 56px;
+                margin: 1.4rem auto 1.6rem;
+            }
+            .ornament {
+                font-size: 1.2rem;
+                letter-spacing: 0.4rem;
+                margin-top: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="coming-soon">
+        <!-- main headline -->
+        <h1 class="wordmark">
+            Coming<span class="ampersand">&nbsp;</span>Soon
+        </h1>
+
+        <!-- divider -->
+        <div class="divider"></div>
+
+        <!-- secondary text -->
+        <p class="sub-message">Something elegant is on its way</p>
+
+        <!-- ornament -->
+        <div class="ornament">✦ ✦ ✦</div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT — explicitly prevents IndexedDB usage
+    (and also blocks any accidental storage attempts)
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ------------------------------------------------------------
+            // 1.  Override IndexedDB on the window object so that any
+            //     attempt to use it throws — this prevents accidental
+            //     or malicious storage.
+            // ------------------------------------------------------------
+            if (window.indexedDB) {
+                Object.defineProperty(window, 'indexedDB', {
+                    get: function() {
+                        throw new Error(
+                            'IndexedDB is disabled on this page.'
+                        );
+                    },
+                    set: function() {
+                        // no-op
+                    },
+                    configurable: false,
+                    enumerable: true
+                });
+            }
+
+            // also block webkit / moz variants just to be safe
+            if (window.webkitIndexedDB) {
+                Object.defineProperty(window, 'webkitIndexedDB', {
+                    get: function() {
+                        throw new Error('IndexedDB is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+            if (window.mozIndexedDB) {
+                Object.defineProperty(window, 'mozIndexedDB', {
+                    get: function() {
+                        throw new Error('IndexedDB is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+            if (window.msIndexedDB) {
+                Object.defineProperty(window, 'msIndexedDB', {
+                    get: function() {
+                        throw new Error('IndexedDB is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+
+            // ------------------------------------------------------------
+            // 2.  Also block the IDBFactory interface if it exists
+            //     (some browsers expose it separately)
+            // ------------------------------------------------------------
+            if (window.IDBFactory) {
+                Object.defineProperty(window, 'IDBFactory', {
+                    get: function() {
+                        throw new Error('IndexedDB is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+
+            // ------------------------------------------------------------
+            // 3.  Prevent any localStorage / sessionStorage attempts
+            //     (just for completeness — though the spec only asked
+            //      for IndexedDB, this adds an extra layer of privacy)
+            // ------------------------------------------------------------
+            if (window.localStorage) {
+                Object.defineProperty(window, 'localStorage', {
+                    get: function() {
+                        throw new Error('localStorage is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+            if (window.sessionStorage) {
+                Object.defineProperty(window, 'sessionStorage', {
+                    get: function() {
+                        throw new Error('sessionStorage is disabled.');
+                    },
+                    configurable: false
+                });
+            }
+
+            // ------------------------------------------------------------
+            // 4.  (Optional) log a friendly message to the console
+            //     so devs know storage is intentionally blocked.
+            // ------------------------------------------------------------
+            console.log(
+                '%c\u2713 IndexedDB, localStorage, and sessionStorage are disabled.',
+                'color: #c9a96e; font-size: 13px; font-weight: 400;'
+            );
+            console.log(
+                '%c\u2713 Cache is disabled via meta tags (no-store, no-cache).',
+                'color: #c9a96e; font-size: 13px; font-weight: 400;'
+            );
+
+        })();
+    </script>
+
+</body>
+</html>
