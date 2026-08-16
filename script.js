@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     btn.className = "action-btn";
                     btn.textContent = "Let's go to reviews";
                     btn.addEventListener("click", () => {
-                        window.location.href = "community/index.html";
+                        window.location.href = "community/";
                     });
                     wrapper.appendChild(p);
                     wrapper.appendChild(btn);
