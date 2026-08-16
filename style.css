@@ -1,0 +1,408 @@
+/* ==========================================================================
+   ELASTIC MINIMALISM - DESIGN SYSTEM (style.css)
+   ========================================================================== */
+
+:root {
+    --bg-base: #f8f9fc;
+    --bg-elevated: rgba(255, 255, 255, 0.7);
+    --text-primary: #1a1b26;
+    --text-secondary: #5a5d72;
+    --accent: #6c5ce7;
+    --accent-dark: #5b4cf5;
+    --accent-glow: rgba(108, 92, 231, 0.25);
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 12px 40px rgba(108, 92, 231, 0.1);
+    --shadow-bouncy: 0 20px 60px rgba(108, 92, 231, 0.18);
+    --border-glass: rgba(255, 255, 255, 0.8);
+    --bounce-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* App Container */
+#app {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatElement {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+    50% { box-shadow: 0 0 0 12px rgba(108, 92, 231, 0); }
+}
+
+/* ==========================================================================
+   PAGE 1: HERO SECTION
+   ========================================================================== */
+
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8vw;
+    background-image: var(--hero-bg, none);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: fadeInUp 0.8s var(--bounce-ease) forwards;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(248, 249, 252, 0.92) 20%, rgba(255, 255, 255, 0.75) 60%, rgba(108, 92, 231, 0.12) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 32px;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.05;
+    background: linear-gradient(135deg, #1a1b26 30%, #6c5ce7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: floatElement 5s ease-in-out infinite alternate;
+}
+
+.scroll-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border: none;
+    color: #ffffff;
+    padding: 16px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-bouncy);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), var(--shadow-bouncy);
+    transition: all 0.35s var(--bounce-ease);
+    will-change: transform;
+}
+
+.scroll-btn:hover {
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 25px 50px rgba(108, 92, 231, 0.3);
+}
+
+.scroll-btn:active {
+    transform: scale(0.96) translateY(1px);
+    transition-duration: 0.1s;
+}
+
+.scroll-btn span {
+    font-size: 1.3rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.scroll-btn:hover span {
+    transform: translateY(4px);
+}
+
+/* ==========================================================================
+   PAGE 2: CONTENT SECTION
+   ========================================================================== */
+
+.content-section {
+    min-height: 100vh;
+    padding: 120px 8vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    background: var(--bg-base);
+}
+
+.intro-text {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    line-height: 1.85;
+    color: var(--text-secondary);
+    max-width: 900px;
+    width: 100%;
+    background: var(--bg-elevated);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s var(--bounce-ease) forwards;
+}
+
+.intro-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+}
+
+/* ==========================================================================
+   ELASTIC ACCORDION SYSTEM (Cards & Dropdowns)
+   ========================================================================== */
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.accordion-item {
+    background: var(--bg-elevated);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.35s var(--bounce-ease);
+    box-shadow: var(--shadow-soft);
+    will-change: transform;
+}
+
+.accordion-item:hover {
+    border-color: rgba(108, 92, 231, 0.3);
+    box-shadow: var(--shadow-medium);
+    transform: scale(1.01) translateY(-2px);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 26px 32px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.25s ease;
+}
+
+.accordion-header:hover {
+    color: var(--accent);
+}
+
+.accordion-icon {
+    transition: transform 0.4s var(--bounce-ease), background-color 0.3s ease;
+    font-size: 0.9rem;
+    color: var(--accent);
+    background: rgba(108, 92, 231, 0.08);
+    padding: 10px 14px;
+    border-radius: 50%;
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg) scale(1.05);
+    background: rgba(108, 92, 231, 0.16);
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--smooth-ease), padding 0.4s ease;
+    padding: 0 32px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.accordion-item.active .accordion-body {
+    max-height: 3500px;
+    padding: 0 32px 32px 32px;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY & INNER COMPONENTS
+   ========================================================================== */
+
+.overview-content p, .faq-item p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+}
+
+.faq-item {
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    padding-bottom: 20px;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.faq-question {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+.action-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #ffffff;
+    border: none;
+    padding: 14px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.35s var(--bounce-ease);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), var(--shadow-soft);
+    margin-top: 16px;
+    will-change: transform;
+}
+
+.action-btn:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), var(--shadow-medium);
+}
+
+.action-btn:active {
+    transform: scale(0.96) translateY(1px);
+    transition-duration: 0.1s;
+}
+
+/* ==========================================================================
+   REGISTRATION FORM & INPUT SYSTEM
+   ========================================================================== */
+
+.regis-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.regis-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 10px;
+}
+
+.regis-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.regis-question {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.regis-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #f1f3f8;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s var(--smooth-ease);
+}
+
+.regis-input:hover {
+    background: #eaeef6;
+}
+
+.regis-input:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.regis-submit-btn {
+    align-self: flex-start;
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & REDUCED MOTION OVERRIDES
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.1s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
