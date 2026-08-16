@@ -1,0 +1,25 @@
+{
+  "questions": [
+    {
+      "number": 1,
+      "question": "What is your full name or your store name?",
+      "placeholder": "e.g., John Doe / Aurora Store"
+    },
+    {
+      "number": 2,
+      "question": "What is your active email address or Telegram handle?",
+      "placeholder": "e.g., name@email.com or @telegramhandle"
+    },
+    {
+      "number": 3,
+      "question": "Briefly describe your dropshipping experience or current situation:",
+      "placeholder": "e.g., Complete beginner, or currently scaling a store..."
+    },
+    {
+      "number": 4,
+      "question": "What core problem do you need help solving?",
+      "placeholder": "e.g., Setting up store structure, payment gateways, etc."
+    }
+  ]
+}
+
