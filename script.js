@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const heroTitle = document.createElement("h1");
         heroTitle.className = "hero-title";
-        heroTitle.textContent = "Aurora Builds";
+        heroTitle.textContent = "Vanta Forge";
 
         const scrollBtn = document.createElement("button");
         scrollBtn.className = "scroll-btn";
