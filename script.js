@@ -146,8 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     wrapper.className = "regis-form-wrapper";
 
                     const infoP = document.createElement("p");
-                    infoP.textContent = "Current free seats opened: 10. Fill out the questions below to secure your spot:
-Don't forget to see you spam folders of email";
+                    infoP.textContent = `Current free seats opened: 10. Fill out the questions below to secure your spot:
+Don't forget to see you spam folders of email`;
                     wrapper.appendChild(infoP);
 
                     const form = document.createElement("form");
