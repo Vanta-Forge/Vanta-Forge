@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     const infoP = document.createElement("p");
                     infoP.textContent = `Current free seats opened: 10. Fill out the questions below to secure your spot:
-Don't forget to see you spam folders of email`;
+Don't forget to see your spam folders of email`;
                     wrapper.appendChild(infoP);
 
                     const form = document.createElement("form");
