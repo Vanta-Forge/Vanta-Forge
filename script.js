@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     wrapper.className = "regis-form-wrapper";
 
                     const infoP = document.createElement("p");
-                    infoP.textContent = `Current free seats opened: check overview. Click the button below to open the registration form. You will be redirected to a secure Google Form to fill in your details.`;
+                    infoP.textContent = `Click the button below to open the registration form. You will be redirected to a secure Google Form to fill in your details.`;
                     wrapper.appendChild(infoP);
 
                     const actionBtn = document.createElement("button");
