@@ -146,8 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     wrapper.className = "regis-form-wrapper";
 
                     const infoP = document.createElement("p");
-                    infoP.textContent = `Current free seats opened: check overview . Fill out the questions below to secure your spot:
-Don't forget to see your spam folders of email`;
+                    infoP.textContent = `Current free seats opened: check overview. Fill out the questions below to secure your spot:
+Don't forget to check your spam folder for emails.`;
                     wrapper.appendChild(infoP);
 
                     const form = document.createElement("form");
@@ -182,48 +182,29 @@ Don't forget to see your spam folders of email`;
                     submitBtn.textContent = "Register";
                     form.appendChild(submitBtn);
 
-                    form.addEventListener("submit", async (e) => {
+                    // ============================================================
+                    // FIXED: Opens Google Form in a new tab — NO Telegram backend
+                    // ============================================================
+                    form.addEventListener("submit", (e) => {
                         e.preventDefault();
-                        submitBtn.textContent = "Sending...";
+
+                        // Open the Google Form in a new tab
+                        window.open("https://forms.gle/N4EBLUZLbUZUvQsm9", "_blank");
+
+                        // Show success message
+                        submitBtn.textContent = "✓ Form Opened";
+                        submitBtn.style.background = "linear-gradient(135deg, #238636, #2ea043)";
                         submitBtn.disabled = true;
 
-                        const responses = {};
-                        inputElements.forEach(item => {
-                            responses[`question_${item.number}`] = item.element.value;
-                        });
+                        // Optionally clear the form fields
+                        inputElements.forEach(item => item.element.value = "");
 
-                        const q1Value = inputElements.find(item => item.number === 1)?.element.value || "anonymous";
-                        const sanitizedQ1 = q1Value.trim().replace(/[^a-zA-Z0-9-_]/g, "_");
-                        const targetFilename = `${sanitizedQ1}.json`;
-
-                        const jsonPayload = {
-                            filename: targetFilename,
-                            timestamp: new Date().toISOString(),
-                            data: responses
-                        };
-
-                        const formData = new FormData();
-                        formData.append('text', JSON.stringify(jsonPayload, null, 2));
-                        const jsonBlob = new Blob([JSON.stringify(jsonPayload, null, 2)], { type: 'application/json' });
-                        const jsonFile = new File([jsonBlob], targetFilename, { type: 'application/json' });
-                        formData.append('files', jsonFile);
-
-                        try {
-                            const workerUrl = "https://telegram-upload-worker.buildsaurora.workers.dev/";
-                            const response = await fetch(workerUrl, { method: "POST", body: formData });
-                            const result = await response.json();
-
-                            if (response.ok && (result.success !== false)) {
-                                submitBtn.textContent = "Sent ✓";
-                                submitBtn.style.background = "linear-gradient(135deg, #238636, #2ea043)";
-                            } else {
-                                throw new Error(result.error || "Server response was not ok");
-                            }
-                        } catch (err) {
-                            console.error("Submission error:", err);
-                            submitBtn.textContent = "Error - Try Again";
+                        // Reset button after 5 seconds so user can try again if needed
+                        setTimeout(() => {
+                            submitBtn.textContent = "Register";
+                            submitBtn.style.background = "";
                             submitBtn.disabled = false;
-                        }
+                        }, 5000);
                     });
 
                     wrapper.appendChild(form);
@@ -240,4 +221,3 @@ Don't forget to see your spam folders of email`;
         console.error("Critical error:", error);
     }
 });
-
