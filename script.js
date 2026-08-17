@@ -98,10 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // 2. Lazy load FAQs and registration form post-paint
         setTimeout(async () => {
             try {
-                const [faqData, regisData] = await Promise.all([
-                    fetchNoCache("faq.json"),
-                    fetchNoCache("regis.json")
-                ]);
+                const faqData = await fetchNoCache("faq.json");
 
                 // FAQs
                 const faqAccordion = createAccordion("2) FAQs", (bodyContainer) => {
@@ -140,74 +137,39 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
                 dropdownContainer.appendChild(communityAccordion);
 
-                // Book A Free Seat Form
+                // ============================================================
+                // 4) BOOK A FREE SEAT - UPDATED (Removed Input Fields)
+                // ============================================================
                 const bookAccordion = createAccordion("4) Book A Free Seat and Solve Your Problem", (bodyContainer) => {
                     const wrapper = document.createElement("div");
                     wrapper.className = "regis-form-wrapper";
 
                     const infoP = document.createElement("p");
-                    infoP.textContent = `Current free seats opened: check overview. Fill out the questions below to secure your spot:
-Don't forget to check your spam folder for emails.`;
+                    infoP.textContent = `Current free seats opened: check overview. Click the button below to open the registration form. You will be redirected to a secure Google Form to fill in your details.`;
                     wrapper.appendChild(infoP);
 
-                    const form = document.createElement("form");
-                    form.className = "regis-form";
+                    const actionBtn = document.createElement("button");
+                    actionBtn.className = "action-btn regis-submit-btn";
+                    actionBtn.textContent = "Register now";
                     
-                    const inputElements = [];
-                    regisData.questions.forEach((qItem) => {
-                        const fieldGroup = document.createElement("div");
-                        fieldGroup.className = "regis-field-group";
-
-                        const label = document.createElement("label");
-                        label.className = "regis-question";
-                        label.textContent = `${qItem.number}) ${qItem.question}`;
-
-                        const input = document.createElement("input");
-                        input.type = "text";
-                        input.className = "regis-input";
-                        input.placeholder = qItem.placeholder;
-                        input.required = true;
-                        input.setAttribute("autocomplete", "off");
-
-                        inputElements.push({ number: qItem.number, element: input });
-
-                        fieldGroup.appendChild(label);
-                        fieldGroup.appendChild(input);
-                        form.appendChild(fieldGroup);
-                    });
-
-                    const submitBtn = document.createElement("button");
-                    submitBtn.type = "submit";
-                    submitBtn.className = "action-btn regis-submit-btn";
-                    submitBtn.textContent = "Register";
-                    form.appendChild(submitBtn);
-
-                    // ============================================================
-                    // FIXED: Opens Google Form in a new tab — NO Telegram backend
-                    // ============================================================
-                    form.addEventListener("submit", (e) => {
-                        e.preventDefault();
-
+                    actionBtn.addEventListener("click", () => {
                         // Open the Google Form in a new tab
                         window.open("https://forms.gle/N4EBLUZLbUZUvQsm9", "_blank");
 
-                        // Show success message
-                        submitBtn.textContent = "✓ Form Opened";
-                        submitBtn.style.background = "linear-gradient(135deg, #238636, #2ea043)";
-                        submitBtn.disabled = true;
+                        // Give visual feedback that the form opened
+                        actionBtn.textContent = "✓ Form Opened";
+                        actionBtn.style.background = "linear-gradient(135deg, #238636, #2ea043)";
+                        actionBtn.disabled = true;
 
-                        // Optionally clear the form fields
-                        inputElements.forEach(item => item.element.value = "");
-
-                        // Reset button after 5 seconds so user can try again if needed
+                        // Reset the button after 5 seconds so they can click again if needed
                         setTimeout(() => {
-                            submitBtn.textContent = "Register";
-                            submitBtn.style.background = "";
-                            submitBtn.disabled = false;
+                            actionBtn.textContent = "Register now";
+                            actionBtn.style.background = "";
+                            actionBtn.disabled = false;
                         }, 5000);
                     });
 
-                    wrapper.appendChild(form);
+                    wrapper.appendChild(actionBtn);
                     bodyContainer.appendChild(wrapper);
                 });
                 dropdownContainer.appendChild(bookAccordion);
